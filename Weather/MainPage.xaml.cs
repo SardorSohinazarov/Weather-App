@@ -1,24 +1,37 @@
-﻿namespace Weather;
+﻿using Weather.Model;
+
+namespace Weather;
+
 
 public partial class MainPage : ContentPage
 {
-	int count = 0;
+    RestService _restService;
 
-	public MainPage()
-	{
-		InitializeComponent();
-	}
+    public MainPage()
+    {
+        InitializeComponent();
 
-	private void OnCounterClicked(object sender, EventArgs e)
-	{
-		count++;
+        _restService = new RestService();
+    }
 
-		if (count == 1)
-			CounterBtn.Text = $"Clicked {count} time";
-		else
-			CounterBtn.Text = $"Clicked {count} times";
+    async void OnGetWeatherButtonClicked(object sender, EventArgs e)
+    {
+        if (!string.IsNullOrWhiteSpace(_cityEntry.Text))
+        {
+            WeatherDate weatherDate = await _restService.GetWeatherDate(GenerateRequestURL(Constants.OpenWeatherMapEndpoint));
 
-		SemanticScreenReader.Announce(CounterBtn.Text);
-	}
+            BindingContext = weatherDate;
+        }
+    }
+
+    string GenerateRequestURL(string endPoint)
+    {
+        string requestUri = endPoint;
+
+        requestUri += $"?q={_cityEntry.Text}";
+        requestUri += $"&units=imperial";
+        requestUri += $"&APPID={Constants.OpenWeatherMapAPIKey}";
+        return requestUri;
+    }
 }
 

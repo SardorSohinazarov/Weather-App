@@ -48,4 +48,25 @@
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Remove="Resources\Images\clouds.png" />
+	  <None Remove="Resources\Images\drop.png" />
+	  <None Remove="Resources\Images\overlay.jpg" />
+	  <None Remove="Resources\Images\pressure.png" />
+	  <None Remove="Resources\Images\storm.png" />
+	  <None Remove="Resources\Images\weather.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+	</ItemGroup>
+	
+	<PropertyGroup Condition="$(TargetFramework.Contains('-android')) and '$(Configuration)' == 'Release'">
+	<AndroidKeyStore>True</AndroidKeyStore>
+	<AndroidSigningKeyStore>..\key.keystore</AndroidSigningKeyStore>
+    <AndroidSigningStorePass>Sardor0618</AndroidSigningStorePass>
+	<AndroidSigningKeyAlias>MauiAlias</AndroidSigningKeyAlias>
+	<AndroidSigningKeyPass>Sardor0618</AndroidSigningKeyPass>
+</PropertyGroup>
+
 </Project>
